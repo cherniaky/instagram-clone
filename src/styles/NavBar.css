@@ -34,18 +34,17 @@
 .nav-search:focus {
     background: #fafafa;
     outline: none;
-    
 }
 .search-img {
     padding-left: 7px;
     background: url("../assets/search.png") no-repeat left 6px top 6px #fafafa;
     background-size: 10px;
 }
-.nav-icons{
+.nav-icons {
     width: auto;
 }
-.icon{
-   margin-left: 24px;
-   cursor: pointer;
-   width: 22px;
+.icon {
+    margin-left: 24px;
+    cursor: pointer;
+    width: 22px;
 }

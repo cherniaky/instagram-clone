@@ -1,9 +1,12 @@
 import * as Firebase from "firebase/app";
 import "firebase/firestore";
-import "firebase/auth";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-//import { seedDatabase } from "../seed";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,7 +22,14 @@ const firebase =  Firebase.initializeApp(firebaseConfig);
 
 //console.log(firebase);
 
-const  FieldValue  = getFirestore();
+const  db  = getFirestore();
+const auth = getAuth();
 //seedDatabase(FieldValue);
 
-export { firebase, FieldValue };
+export {
+    firebase,
+    db,
+    auth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+};
