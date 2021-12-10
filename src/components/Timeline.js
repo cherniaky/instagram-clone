@@ -1,3 +1,5 @@
+import '../styles/timeline.css';
+
 export default function Timeline() {
-    return <div>i am timeline</div>;
+    return <div className='timeline-container'>i am timeline</div>;
 }

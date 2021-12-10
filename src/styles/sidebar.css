@@ -1,5 +1,26 @@
 .sidebar-container{
     margin-left: 28px;
+   
     align-items: center;
     width: 293px;
+}
+.user-container{
+    display: flex;
+   padding: 10px 0;
+    align-items: center;
+     text-decoration: none;
+     color: black;
+}
+.user-container p{
+  color: grey;
+  font-size: 0.9rem;
+}
+.userIcon{
+    color: black;
+    width: 56px;
+    height: 56px;
+}
+.user-name{
+    padding-left: 10px;
+   
 }

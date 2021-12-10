@@ -1,3 +1,3 @@
 export default function Suggestions () {
-    return <div>d</div>;
+    return <div>seggestion</div>;
 };

@@ -8,9 +8,8 @@ export default function SideBar() {
     console.log(user);
     return (
         <div className="sidebar-container">
-            i am sidebar
-            <User />
-            <Suggestions/>
+            <User  username={user.username} fullName={user.fullName}/>
+            <Suggestions userId={user.userId}/>
         </div>
     );
 }
