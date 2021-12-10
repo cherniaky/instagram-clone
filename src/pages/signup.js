@@ -11,8 +11,6 @@ import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 export default function SignUp() {
     const navigate = useNavigate();
     const {
-        firebase,
-        signInWithEmailAndPassword,
         auth,
         db,
         createUserWithEmailAndPassword,
@@ -50,7 +48,7 @@ export default function SignUp() {
                     following: [],
                     dateCreated: Date.now(),
                 });
-                navigate(ROUTES.DASHBOARD);
+                navigate(ROUTES.LOGIN);
             } catch (error) {
                 setFullName("");
                 setEmailAddress("");

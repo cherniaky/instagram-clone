@@ -1,5 +1,4 @@
 import * as Firebase from "firebase/app";
-import "firebase/firestore";
 import {
     getAuth,
     signInWithEmailAndPassword,

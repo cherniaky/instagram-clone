@@ -11,7 +11,21 @@ export async function doesUsernameExist(username) {
 
     const querySnapshot = await getDocs(q);
 
-    ///console.log(querySnapshot.docs);
-    return querySnapshot.docs.length ;
-    
+    return querySnapshot.docs.length;
 }
+
+export async function getUserByUserId(userId) {
+
+    const q = query(collection(db, "users"), where("userId", "==",userId));
+
+    const querySnapshot = await getDocs(q);
+
+    const user =querySnapshot.docs.map((item)=>({
+       ...item.data(),
+       docId: item.id,
+    }))
+
+    return user[0];
+}
+
+

@@ -1,0 +1,7 @@
+.not-found-page{
+    background-color: rgb(179, 179, 179);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

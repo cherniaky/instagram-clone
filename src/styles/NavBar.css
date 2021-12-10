@@ -41,10 +41,12 @@
     background-size: 10px;
 }
 .nav-icons {
-    width: auto;
+    width: fit-content;
 }
 .icon {
     margin-left: 24px;
     cursor: pointer;
     width: 22px;
+    color:black;
 }
+

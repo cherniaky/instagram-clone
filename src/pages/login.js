@@ -8,7 +8,7 @@ import * as ROUTES from "../constants/routes";
 
 export default function Login() {
     const navigate = useNavigate();
-    const { firebase, signInWithEmailAndPassword, auth } =
+    const { signInWithEmailAndPassword, auth } =
         useContext(FirebaseContext);
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");

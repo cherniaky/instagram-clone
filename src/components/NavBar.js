@@ -1,7 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import FirebaseContext from "../context/firebase";
+import UserContext from "../context/user";
 import "../styles/NavBar.css";
+import * as ROUTES from "../constants/routes";
+import { Link, Router } from "react-router-dom";
+import { signOut } from "firebase/auth";
 
-export default function NavBar({ inHome }) {
+export default function NavBar({ inHome = true }) {
+    const { user } = useContext(UserContext);
+    const {
+        firebase,
+        db,
+        auth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+    } = useContext(FirebaseContext);
+
+
+    //console.log(user.uid);
     return (
         <div className="navbar-container">
             <div className="nav-content-container">
@@ -10,6 +26,7 @@ export default function NavBar({ inHome }) {
                     className="logo"
                     src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
                 />
+
                 <div className="search-container">
                     <input
                         className="nav-search search-img"
@@ -73,39 +90,69 @@ export default function NavBar({ inHome }) {
                         <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                     </svg>
 
-                    <svg
-                       
-                        version="1.1"
-                        id="Capa_1"
-                        x="0px"
-                        y="0px"
-                        width="22"
+                    {user ? (
+                        <>
+                            <Link to={`/p/`}>
+                                <svg
+                                   className="icon profile"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M16 9C16 11.2091 14.2091 13 12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9ZM14 9C14 10.1046 13.1046 11 12 11C10.8954 11 10 10.1046 10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1ZM3 12C3 14.0902 3.71255 16.014 4.90798 17.5417C6.55245 15.3889 9.14627 14 12.0645 14C14.9448 14 17.5092 15.3531 19.1565 17.4583C20.313 15.9443 21 14.0524 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12ZM12 21C9.84977 21 7.87565 20.2459 6.32767 18.9878C7.59352 17.1812 9.69106 16 12.0645 16C14.4084 16 16.4833 17.1521 17.7538 18.9209C16.1939 20.2191 14.1881 21 12 21Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </Link>
 
-                        className="icon profile"
-                        height="22"
-                        viewBox="0 0 45.532 45.532"
-                       
-                       
-                    >
-                        <g>
-                            <path d="M22.766,0.001C10.194,0.001,0,10.193,0,22.766s10.193,22.765,22.766,22.765c12.574,0,22.766-10.192,22.766-22.765   S35.34,0.001,22.766,0.001z M22.766,6.808c4.16,0,7.531,3.372,7.531,7.53c0,4.159-3.371,7.53-7.531,7.53   c-4.158,0-7.529-3.371-7.529-7.53C15.237,10.18,18.608,6.808,22.766,6.808z M22.761,39.579c-4.149,0-7.949-1.511-10.88-4.012   c-0.714-0.609-1.126-1.502-1.126-2.439c0-4.217,3.413-7.592,7.631-7.592h8.762c4.219,0,7.619,3.375,7.619,7.592   c0,0.938-0.41,1.829-1.125,2.438C30.712,38.068,26.911,39.579,22.761,39.579z" />
-                        </g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                    </svg>
+                            <svg
+                                onClick={() => {
+                                    signOut(auth);
+                                }}
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon "
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                                />
+                            </svg>
+                        </>
+                    ) : (
+                        <>
+                            <Link to={ROUTES.LOGIN}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon login"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                                    />
+                                </svg>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
