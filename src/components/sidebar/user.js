@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import Skeleton from 'react-loading-skeleton';
-import { memo } from "react";
+//import { memo } from "react";
 
 function User({username,fullName}){
    return !username || !fullName ? (
@@ -34,4 +34,4 @@ function User({username,fullName}){
    );
 }
 
-export default memo(User);
+export default User ;

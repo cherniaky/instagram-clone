@@ -4,9 +4,11 @@ import UserContext from "../context/user";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserByUserId } from "../services/firebase";
 
+
 export default function useUser() {
     const [activeUser, setActiveUser] = useState({});
     const { user } = useContext(UserContext);
+    const {auth} = useContext(FirebaseContext);
 
     useEffect(() => {
         async function getUserObjByUserId() {
@@ -15,11 +17,15 @@ export default function useUser() {
             setActiveUser(response);
         }
 
-        if (user.uid) {
+        if (user?.uid) {
             getUserObjByUserId();
         }
+        else{
+            setActiveUser({username:'You dont log in',fullName:'', userId:'',})
+        }
+
         return () => {};
-    }, [user]);
+    }, [user,auth])
 
     return { user: activeUser };
 }

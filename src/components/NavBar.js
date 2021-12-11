@@ -3,8 +3,9 @@ import FirebaseContext from "../context/firebase";
 import UserContext from "../context/user";
 import "../styles/NavBar.css";
 import * as ROUTES from "../constants/routes";
-import { Link, Router } from "react-router-dom";
+import { Link, Router ,useNavigate} from "react-router-dom";
 import { signOut } from "firebase/auth";
+
 
 export default function NavBar({ inHome = true }) {
     const { user } = useContext(UserContext);
@@ -92,7 +93,7 @@ export default function NavBar({ inHome = true }) {
 
                     {user ? (
                         <>
-                            <Link to={`/p/`}>
+                            <Link to={`/p/${user.uid}`}>
                                 <svg
                                    className="icon profile"
                                     width="24"
@@ -116,8 +117,8 @@ export default function NavBar({ inHome = true }) {
                             </Link>
 
                             <svg
-                                onClick={() => {
-                                    signOut(auth);
+                                onClick={()=>{
+                                  signOut(auth);
                                 }}
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="icon "

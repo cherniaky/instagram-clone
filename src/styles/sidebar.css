@@ -1,6 +1,6 @@
 .sidebar-container{
     margin-left: 28px;
-   
+   /* position: fixed; */
     align-items: center;
     width: 293px;
 }
@@ -23,4 +23,45 @@
 .user-name{
     padding-left: 10px;
    
+}
+
+.suggestions-title{
+    color: grey;
+    font-family: 'Segoe UI Bold', sans-serif;
+    font-size: 0.9rem;
+}
+
+.suggestions-list{
+    padding-top: 8px;
+    min-width: 55%;
+    max-width: fit-content;
+}
+.suggestion-profile{
+    padding: 8px 0;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.suggestion-profile a{
+    text-decoration: none;
+}
+
+.subscribe{
+    cursor: pointer;
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    color: rgb(9, 176, 236);
+    font-weight: 550;
+}
+
+.unfollow{
+    color: black;
+    
+}
+.suggestion-name{
+    margin-left: 4px;
+}
+.link{
+    color: black;
 }
