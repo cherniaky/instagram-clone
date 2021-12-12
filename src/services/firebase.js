@@ -69,7 +69,7 @@ export async function updateLoggedUserFollowing(
     return;
 }
 
-export async function updateFollowedUserFollowers(spDocId, userId ,followed) {
+export async function updateFollowedUserFollowers(spDocId, userId, followed) {
     const FollowedUserRef = doc(db, "users", spDocId);
 
     followed
@@ -81,4 +81,30 @@ export async function updateFollowedUserFollowers(spDocId, userId ,followed) {
           });
 
     return;
+}
+
+export async function getPhotos(userId, following) {
+    const q = query(collection(db, "photos"), where("userId", "in", following));
+
+    const querySnapshot = await getDocs(q);
+
+    const userFollowedPhotos = querySnapshot.docs.map((photo) => ({
+        ...photo.data(),
+        docId: photo.id,
+    }));
+
+    const photosWithUserDetails = await Promise.all(
+        userFollowedPhotos.map(async (photo) => {
+            let userLikedPhoto = false;
+            if (photo.likes.includes(userId)) {
+                userLikedPhoto = true;
+            }
+
+            const { username } = await getUserByUserId(photo.userId);
+
+            return { username, ...photo, userLikedPhoto };
+        })
+    );
+
+    return photosWithUserDetails;
 }

@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
-import Skeleton from 'react-loading-skeleton';
-//import { memo } from "react";
+
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function User({username,fullName}){
    return !username || !fullName ? (
-       <Skeleton count={1} height={61} />
+       <Skeleton count={1} height={70} width={170}/>
    ) : (
        <Link to={`/p/${username}`} className="user-container">
            <svg

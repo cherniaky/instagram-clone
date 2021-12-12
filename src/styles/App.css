@@ -44,6 +44,10 @@ body {
     font-weight: 500;
     text-decoration: none;
 }
+a{
+    text-decoration: none;
+    color: black;
+}
 
 .pagesContainer {
     width: 100%;

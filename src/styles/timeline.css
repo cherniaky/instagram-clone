@@ -1,3 +1,77 @@
-.timeline-container{
+.timeline-container {
+    margin-top: 12px;
     width: 614px;
+}
+
+.post-container {
+    margin-bottom: 24px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    max-height: fit-content;
+}
+.header-container {
+    height: 60px;
+    padding: 14px 4px 14px 16px;
+}
+.header-link {
+    font-family: "Segoe UI Bold", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    width: min-content;
+}
+.header-icon {
+    margin-right: 14px;
+}
+
+.post-img {
+    width: 614px;
+}
+
+.actions-container {
+    margin: 6px 16px 8px;
+}
+.action {
+    margin: 8px;
+    color: black;
+    cursor: pointer;
+    width: 24px;
+    height: 20.85;
+}
+.action:hover {
+    color: grey;
+}
+
+.action:focus {
+    outline: none;
+}
+
+.activeLike {
+    fill: #ed4956;
+    color: #ed4956;
+}
+
+.activeLike:hover {
+    color: #ed4956;
+}
+.count-likes {
+    font-family: "Segoe UI Bold";
+    font-weight: 200;
+    padding: 0 8px;
+}
+.footer-container {
+    margin: 0px 16px 8px;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.footer-container span {
+    margin: 0px 8px;
+}
+.footer-user {
+    margin: 0px 8px;
+    font-family: "Segoe UI Bold", Tahoma, Geneva, Verdana, sans-serif;
+}
+.footer-user:hover{
+    text-decoration: underline black;
 }

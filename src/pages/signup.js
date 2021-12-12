@@ -1,7 +1,7 @@
 import FirebaseContext from "../context/firebase";
 import { useState, useContext, useEffect } from "react";
 import "../styles/loginPage.css";
-import loginImg from "../assets/login-page.png";
+import loginImg from "../assets/login-page.jpg";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
@@ -9,7 +9,7 @@ import { doesUsernameExist } from "../services/firebase";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 
 export default function SignUp() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const {
         auth,
         db,

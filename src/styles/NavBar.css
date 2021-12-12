@@ -5,7 +5,7 @@
     height: 54px;
     border-bottom: 1px solid var(--border);
     background-color: white;
-
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,6 +47,5 @@
     margin-left: 24px;
     cursor: pointer;
     width: 24px;
-    color:black;
+    color: black;
 }
-
