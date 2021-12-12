@@ -5,7 +5,7 @@ export default function Header({ username }) {
         <div className="header-container">
             <Link to={`/p/${username}`} className="header-link">
                 <svg
-                    className="header-icon link"
+                    className="header-icon"
                     width="32"
                     height="32"
                     viewBox="0 0 24 24"

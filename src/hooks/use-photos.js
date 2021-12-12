@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../context/user";
-import { getUserByUserId ,getPhotos} from "../services/firebase";
+import { getUserByUserId, getPhotos } from "../services/firebase";
 
 export default function usePhotos() {
     const [photos, setPhotos] = useState(null);
@@ -13,19 +13,21 @@ export default function usePhotos() {
             let followedUserPhotos = [];
 
             if (following.length > 0) {
-                followedUserPhotos = await getPhotos(user.uid , following);
+                followedUserPhotos = await getPhotos(user.uid, following);
 
-                followedUserPhotos.sort((a,b)=>b.dateCreated - a.dateCreated);
+                followedUserPhotos.sort(
+                    (a, b) => b.dateCreated - a.dateCreated
+                );
 
                 setPhotos(followedUserPhotos);
-               // console.log(followedUserPhotos);
+                // console.log(followedUserPhotos);
             }
         }
 
-        getTimelinePhotos();
-        return () => {};
-    }, [user.uid]);
+        if (user?.uid) {
+            getTimelinePhotos();
+        }
+    }, [user?.uid]);
 
-    
     return { photos };
 }
