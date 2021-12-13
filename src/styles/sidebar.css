@@ -1,6 +1,6 @@
 .sidebar-container{
-    margin-left: 28px;
-   /* position: fixed; */
+    margin-left: 50%;
+   position: fixed;
     align-items: center;
     color: black;
     width: 293px;
