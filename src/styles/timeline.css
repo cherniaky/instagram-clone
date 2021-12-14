@@ -100,3 +100,37 @@
     padding-left: 8px;
     color: grey;
 }
+
+.comment-container{
+    width: 100%;
+}
+.comment-form{
+    border-top: 1px solid #dbdbdb;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.comment-input{
+    border: none;
+    margin: 10px 0px 10px 24px;
+    width: 80%;
+    font-size: 1.05rem;
+}
+.comment-input:focus{
+    outline: none;
+}
+.comment-button:disabled{
+    cursor: default;
+}
+.comment-button{
+    cursor: pointer;
+     color: rgb(9, 176, 236);
+    font-weight: 550;
+    /* font-family: 'Segoe UI Bold', Tahoma, Geneva, Verdana, sans-serif; */
+    background-color: transparent;
+     border: none;
+    margin: 10px 24px 10px 0 ;
+}
+.opacity-25{
+    opacity: 0.3;
+}

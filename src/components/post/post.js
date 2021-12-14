@@ -18,7 +18,7 @@ export default function Post({ content }) {
                 docId={content.docId}
                 totalLikes={content.likes.length}
                 likedPhoto={content.userLikedPhoto}
-                handleFocus
+                handleFocus={handleFocus}
             />
             <Footer username={content.username} caption={content.caption} />
             <Comments
