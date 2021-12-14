@@ -108,3 +108,13 @@ export async function getPhotos(userId, following) {
 
     return photosWithUserDetails;
 }
+
+export async function addComment(docId, comment, displayName) {
+    const photoRef = doc(db, "photos", docId);
+
+    await updateDoc(photoRef, {
+        comments: arrayUnion({ displayName, comment }),
+    });
+
+    return;
+}

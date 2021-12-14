@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import FirebaseContext from "../../context/firebase";
 import UserContext from "../../context/user";
-import { getUserByUserId } from "../../services/firebase";
+import { addComment, getUserByUserId } from "../../services/firebase";
 
 export default function AddComment({
     docId,
@@ -13,12 +13,14 @@ export default function AddComment({
     const { db } = useContext(FirebaseContext);
     const { user, activeUsername } = useContext(UserContext);
 
-    const handleSubmitComment = (event) => {
+    const handleSubmitComment = async (event) => {
         event.preventDefault();
-        setComment('');
-        
+        let commentValue = comment;
+        setComment("");
+        setComments([...comments, { displayName: activeUsername, comment }]);
 
-        setComments([ ...comments, { displayName: activeUsername, comment }]);
+        await addComment(docId, commentValue, activeUsername);
+
         return;
     };
 

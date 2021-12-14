@@ -14,7 +14,7 @@ export default function Comments({ docId, allComments, posted, commentInput }) {
 
     return (
         <div>
-            {comments.length >= 3 && (
+            {comments.length > 3 && (
                 <p className="view-all-comments">
                     View all {comments.length} comments
                 </p>

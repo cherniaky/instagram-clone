@@ -8,6 +8,8 @@ import useAuthListener from "./hooks/use-auth-listener";
 import UserContext from "./context/user";
 import { getUserByUserId } from "./services/firebase";
 
+import ProtectedRoute from "./helpers/protected.route";
+
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/signup"));
 const NotFound = lazy(() => import("./pages/notfound"));
@@ -23,8 +25,10 @@ function App() {
         return myuser.username;
     }
 
-    getUsername().then((result) => setUsername(result));
-
+    if (user) {
+        getUsername().then((result) => setUsername(result));
+    }
+    
     return (
         <UserContext.Provider value={{ user, activeUsername: username }}>
             <Router basename="/instagram-clone">
@@ -33,19 +37,24 @@ function App() {
                         <Routes>
                             <Route
                                 exact
-                                path={ROUTES.DASHBOARD}
-                                element={<Dashboard />}
-                            />
-                            <Route
-                                exact
                                 path={ROUTES.LOGIN}
                                 element={<Login />}
                             />
+
                             <Route
                                 exact
                                 path={ROUTES.SIGN_UP}
                                 element={<SignUp />}
                             />
+
+                            <Route exact path={ROUTES.DASHBOARD} element={<ProtectedRoute user={user}/>}>
+                                <Route
+                                    exact
+                                    path={ROUTES.DASHBOARD}
+                                    element={<Dashboard />}
+                                />
+                            </Route>
+
                             <Route path=":a" element={<NotFound />} />
                         </Routes>
                     </div>
