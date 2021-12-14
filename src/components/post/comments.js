@@ -16,7 +16,7 @@ export default function Comments({ docId, allComments, posted, commentInput }) {
         <div>
             {comments.length > 3 && (
                 <p className="view-all-comments">
-                    View all {comments.length} comments
+                    View all  comments
                 </p>
             )}
             {comments

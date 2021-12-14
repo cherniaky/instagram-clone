@@ -14,9 +14,11 @@ const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/signup"));
 const NotFound = lazy(() => import("./pages/notfound"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
+const Profile = lazy(() => import("./pages/profile"));
 
 function App() {
-    const [inHome, setInHome] = useState(true);
+    const [inHome, setInHome] = useState(false);
+    const [inProfile, setInProfile] = useState(false);
     const [username, setUsername] = useState("");
     const { user } = useAuthListener();
 
@@ -28,7 +30,7 @@ function App() {
     if (user) {
         getUsername().then((result) => setUsername(result));
     }
-    
+
     return (
         <UserContext.Provider value={{ user, activeUsername: username }}>
             <Router basename="/instagram-clone">
@@ -47,11 +49,33 @@ function App() {
                                 element={<SignUp />}
                             />
 
-                            <Route exact path={ROUTES.DASHBOARD} element={<ProtectedRoute user={user}/>}>
+                            <Route
+                                exact
+                                path={ROUTES.PROFILE}
+                                element={
+                                    <Profile
+                                        inProfile={inProfile}
+                                        setInHome={setInHome}
+                                        setInProfile={setInProfile}
+                                    />
+                                }
+                            />
+
+                            <Route
+                                exact
+                                path={ROUTES.DASHBOARD}
+                                element={<ProtectedRoute user={user} />}
+                            >
                                 <Route
                                     exact
                                     path={ROUTES.DASHBOARD}
-                                    element={<Dashboard />}
+                                    element={
+                                        <Dashboard
+                                            inHome={inHome}
+                                            setInHome={setInHome}
+                                            setInProfile={setInProfile}
+                                        />
+                                    }
                                 />
                             </Route>
 

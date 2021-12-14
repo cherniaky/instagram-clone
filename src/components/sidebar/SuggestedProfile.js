@@ -32,7 +32,7 @@ export default function SuggestedProfile({
 
     return (
         <div className="suggestion-profile">
-            <Link to={`/p/${profileId}`}>
+            <Link to={`/p/${username}`}>
                 <svg
                     className="suggestion-icon"
                     width="32"
@@ -54,7 +54,7 @@ export default function SuggestedProfile({
                     />
                 </svg>
             </Link>
-            <Link to={`/p/${profileId}`}>
+            <Link to={`/p/${username}`}>
                 <span id="fuck" className="suggestion-name ">
                     {username}
                 </span>
