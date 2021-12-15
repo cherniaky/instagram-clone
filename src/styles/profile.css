@@ -1,0 +1,21 @@
+.profile-container{
+    height: fit-content;
+}
+
+
+.profile-content-container {
+
+    margin-top: 54px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: center;
+    padding-top: 30px;
+}
+.header-container{
+    display: flex;
+    flex-direction: row;
+    width: 935px;
+    margin-bottom: 44px;
+}

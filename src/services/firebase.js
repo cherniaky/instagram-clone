@@ -148,6 +148,15 @@ export async function addComment(docId, comment, displayName) {
     return;
 }
 
-export async function isUserFollowingProfile(userId,profileId) {
-    
+export async function isUserFollowingProfile(username, profileUserId) {
+    const q = query(
+        collection(db, "users"),
+        where("username", "==", username),
+        where("following", "array-contains", profileUserId)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    //console.log(!!querySnapshot.docs[0]);
+    return !!querySnapshot.docs[0];
 }

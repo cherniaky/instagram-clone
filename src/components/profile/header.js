@@ -3,6 +3,7 @@ import UserContext from "../../context/user";
 import FirebaseContext from "../../context/firebase";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { isUserFollowingProfile } from "../../services/firebase";
 
 export default function Header({
     profile,
@@ -14,22 +15,27 @@ export default function Header({
     const { firebase, db, auth } = useContext(FirebaseContext);
     const { user, activeUsername } = useContext(UserContext);
     const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-    const [myProfile, setMyProfile] = useState(false);
+    const [myProfile, setMyProfile] = useState(true);
 
     useEffect(() => {
-        setMyProfile(profile.username != activeUsername);
-        // const isLoggedUserFollowingProfile = async () => {
-        //     const isFollowing = await isUserFollowingProfile(
-        //         user.uid,
-        //         profile.userId
-        //     );
+        setMyProfile(profile.username == activeUsername);
 
-        // };
+        const isLoggedUserFollowingProfile = async () => {
+            const isFollowing = await isUserFollowingProfile(
+                activeUsername,
+                profile.userId,
+            );
+            setIsFollowingProfile(isFollowing);
+        };
+
+        if (activeUsername && profile.userId) {
+            isLoggedUserFollowingProfile();
+        }
 
         return () => {};
-    }, [profile]);
+    }, [user.username,profile.userId]);
 
-    return (
+    return profile ? (
         <div className="header-container w-935">
             <svg
                 className="header-profile-icon"
@@ -53,12 +59,20 @@ export default function Header({
             </svg>
 
             <div className="header-info">
-                <div className="header-username">Username</div>
-                {myProfile ? myProfile && <button>Follow</button> : null}
+                <div className="first-row">
+                    <div className="header-username">{profile.username}</div>
+                    {!myProfile && <button>Follow</button>}
+                </div>
+                <div className="second-row">
+                    <div className="header-photos-count">{photosCount} photos</div>
+                    <div className="header-folowers-info">{followerCount} followers</div>
+                    <div className="header-following-info">{followingCount} following</div>
+                </div>
 
-                <div className="header-folowers-info">followers</div>
-                <div className="header-fullname">fullname</div>
+                <div className="header-fullname">{profile.fullName}</div>
             </div>
         </div>
+    ) : (
+        <Skeleton count={1} />
     );
 }

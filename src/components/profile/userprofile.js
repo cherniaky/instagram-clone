@@ -40,7 +40,7 @@ export default function UserProfile({ user }) {
         return () => {};
     }, [user]);
 
-    //console.log(profile.username,photosCollection.length);
+    //console.log(profile,photosCollection.length);
 
     return (
         <div className="profile-content-container">

@@ -4,6 +4,7 @@ import { getUserByUsername } from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import NavBar from "../components/NavBar";
 import UserProfile from "../components/profile/userprofile";
+import '../styles/profile.css'
 
 export default function Profile({ setInHome, setInProfile, inProfile }) {
     const navigate = useNavigate();
