@@ -1,9 +1,34 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../../context/user";
+import FirebaseContext from "../../context/firebase";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export default function Header() {
+export default function Header({
+    profile,
+    photosCount,
+    followerCount,
+    setFollowerCount,
+    followingCount,
+}) {
+    const { firebase, db, auth } = useContext(FirebaseContext);
+    const { user, activeUsername } = useContext(UserContext);
+    const [isFollowingProfile, setIsFollowingProfile] = useState(false);
+    const [myProfile, setMyProfile] = useState(false);
+
+    useEffect(() => {
+        setMyProfile(profile.username != activeUsername);
+        // const isLoggedUserFollowingProfile = async () => {
+        //     const isFollowing = await isUserFollowingProfile(
+        //         user.uid,
+        //         profile.userId
+        //     );
+
+        // };
+
+        return () => {};
+    }, [profile]);
+
     return (
         <div className="header-container w-935">
             <svg
@@ -29,7 +54,8 @@ export default function Header() {
 
             <div className="header-info">
                 <div className="header-username">Username</div>
-                <button>Follow</button>
+                {myProfile ? myProfile && <button>Follow</button> : null}
+
                 <div className="header-folowers-info">followers</div>
                 <div className="header-fullname">fullname</div>
             </div>

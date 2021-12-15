@@ -51,18 +51,6 @@ function App() {
 
                             <Route
                                 exact
-                                path={ROUTES.PROFILE}
-                                element={
-                                    <Profile
-                                        inProfile={inProfile}
-                                        setInHome={setInHome}
-                                        setInProfile={setInProfile}
-                                    />
-                                }
-                            />
-
-                            <Route
-                                exact
                                 path={ROUTES.DASHBOARD}
                                 element={<ProtectedRoute user={user} />}
                             >
@@ -77,6 +65,19 @@ function App() {
                                         />
                                     }
                                 />
+
+                                <Route
+                                    exact
+                                    path={ROUTES.PROFILE}
+                                    element={
+                                        <Profile
+                                            inProfile={inProfile}
+                                            setInHome={setInHome}
+                                            setInProfile={setInProfile}
+                                        />
+                                    }
+                                />
+                                
                             </Route>
 
                             <Route path=":a" element={<NotFound />} />

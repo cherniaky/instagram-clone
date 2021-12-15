@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { getUserByUsername } from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import NavBar from "../components/NavBar";
-import Header from "../components/profile/header";
+import UserProfile from "../components/profile/userprofile";
 
 export default function Profile({ setInHome, setInProfile, inProfile }) {
     const navigate = useNavigate();
     const { username } = useParams();
+    
     // console.log(username);
     const [userExists, setUserExists] = useState(false);
     const [user, setUser] = useState(null);
@@ -24,7 +25,7 @@ export default function Profile({ setInHome, setInProfile, inProfile }) {
 
             if (getUser) {
                 setUser(getUser);
-                document.title = getUser.fullName;
+                document.title =`${getUser.fullName}(@${getUser.username})` ;
                 setUserExists(true);
             } else {
                 setUserExists(false);
@@ -34,15 +35,12 @@ export default function Profile({ setInHome, setInProfile, inProfile }) {
 
         checkUserExist();
         
-    }, [username]);
+    }, [username, navigate]);
 
     return userExists ? (
         <div className="profile-container">
             <NavBar inProfile={inProfile} />
-            <div className="profile-content-container">
-                <Header />
-                {/*  <Photos/> */}
-            </div>
+            <UserProfile  user={user}/>
         </div>
     ) : null;
 }

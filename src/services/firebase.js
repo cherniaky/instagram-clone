@@ -34,7 +34,7 @@ export async function getUserByUsername(username) {
         docId: item.id,
     }));
 
-    return user[0] ;
+    return user[0];
 }
 
 export async function getUserByUserId(userId) {
@@ -122,6 +122,22 @@ export async function getPhotos(userId, following) {
     return photosWithUserDetails;
 }
 
+export async function getUserPhotosByUsername(username) {
+    const { userId } = await getUserByUsername(username);
+    const q = query(collection(db, "photos"), where("userId", "==", userId));
+
+    const querySnapshot = await getDocs(q);
+
+    const photos = querySnapshot.docs
+        .map((item) => ({
+            ...item.data(),
+            docId: item.id,
+        }))
+        .sort((a, b) => b.dateCreated - a.dateCreated);
+
+    return photos;
+}
+
 export async function addComment(docId, comment, displayName) {
     const photoRef = doc(db, "photos", docId);
 
@@ -130,4 +146,8 @@ export async function addComment(docId, comment, displayName) {
     });
 
     return;
+}
+
+export async function isUserFollowingProfile(userId,profileId) {
+    
 }
