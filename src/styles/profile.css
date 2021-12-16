@@ -8,14 +8,108 @@
     margin-top: 54px;
     align-items: center;
     display: flex;
+    
     flex-direction: column;
     height: fit-content;
-    justify-content: center;
+    
     padding-top: 30px;
 }
-.header-container{
+.profile-header-container{
+    margin-left: 20%;
     display: flex;
     flex-direction: row;
     width: 935px;
     margin-bottom: 44px;
+}
+.profile-header-icon{
+    margin: 0 60px;
+}
+.header-info{
+    width: 613px;
+    display: flex;
+    flex-direction: column;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.info{
+    margin-left: 25px;
+}
+.header-username{
+    font-size: 1.8rem;
+    font-weight: lighter;
+}
+.profile-follow{
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 40px;
+    border: none;
+    background-color: #0095F6;
+    color: white;
+    border-radius: 5px;
+    width: 130px;
+    height: 30px;
+}
+.profile-unfollow{
+    background-color: transparent;
+    border: 1px solid #dbdbdb;
+    color: black;
+}
+.profile-skeleton{
+    margin-left: 40px;
+}
+.profile-header-fullname{
+   font-size: 1.2rem;
+   font-weight: bold;
+}
+
+.profile-photos-container{
+    padding-top: 28px;
+    border-top: 1px solid #dbdbdb ;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 28px;
+    column-gap: 28px;
+    width: 935px;
+    margin-bottom: 3rem ;
+     transition: 0.2s;
+}
+.profile-photo-container{
+     width: 293px;
+    height: 293px;
+    overflow: hidden;
+    position: relative;
+}
+.profile-photo-container img{
+    width: 293px; 
+    transform: translateY(-15%);
+    /* height: 293px; */
+}
+
+.no-photos{
+    font-size: larger;
+    margin-left: 145%;
+    width: 140px;
+}
+.profile-photo-detail{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 30%;
+    padding-top: 45%;
+    color: white;
+    display: none;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    transition: 0.2s;
+}
+.profile-actions{
+    margin: 0 10px;
+}
+.profile-photo-container:hover .profile-photo-detail{
+    display: flex;
+   background-color: rgba(0, 0, 0, 0.3);
 }

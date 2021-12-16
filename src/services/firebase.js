@@ -160,3 +160,24 @@ export async function isUserFollowingProfile(username, profileUserId) {
     //console.log(!!querySnapshot.docs[0]);
     return !!querySnapshot.docs[0];
 }
+
+export async function toggleFollow(
+    isFollowingProfile,
+    activeUserDocId,
+    profileDocId,
+    profileUserId,
+    activeUserId
+) {
+    await updateLoggedUserFollowing(
+        activeUserDocId,
+        profileUserId,
+        isFollowingProfile
+    );
+    await updateFollowedUserFollowers(
+        profileDocId,
+        activeUserId,
+        isFollowingProfile
+    );
+        
+    return;
+}

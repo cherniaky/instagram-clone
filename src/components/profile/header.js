@@ -3,7 +3,8 @@ import UserContext from "../../context/user";
 import FirebaseContext from "../../context/firebase";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { isUserFollowingProfile } from "../../services/firebase";
+import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import useUser from "../../hooks/use-user";
 
 export default function Header({
     profile,
@@ -13,9 +14,35 @@ export default function Header({
     followingCount,
 }) {
     const { firebase, db, auth } = useContext(FirebaseContext);
-    const { user, activeUsername } = useContext(UserContext);
+    const {user}= useUser();
+    const {  activeUsername } = useContext(UserContext);
     const [isFollowingProfile, setIsFollowingProfile] = useState(false);
     const [myProfile, setMyProfile] = useState(true);
+
+    const handleToggleFollow = async () => {
+        setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
+        setFollowerCount({
+            followerCount: isFollowingProfile
+                ? followerCount - 1
+                : followerCount + 1,
+        });
+
+        // console.log(
+        //     isFollowingProfile,
+        //     user.docId,
+        //     profile.docId,
+        //     profile.userId,
+        //     user.userId
+        // );
+        
+        await toggleFollow(
+            isFollowingProfile,
+            user.docId,
+            profile.docId,
+            profile.userId,
+            user.userId,
+        );
+    };
 
     useEffect(() => {
         setMyProfile(profile.username == activeUsername);
@@ -23,7 +50,7 @@ export default function Header({
         const isLoggedUserFollowingProfile = async () => {
             const isFollowing = await isUserFollowingProfile(
                 activeUsername,
-                profile.userId,
+                profile.userId
             );
             setIsFollowingProfile(isFollowing);
         };
@@ -33,12 +60,12 @@ export default function Header({
         }
 
         return () => {};
-    }, [user.username,profile.userId]);
+    }, [user.username, profile.userId]);
 
     return profile ? (
-        <div className="header-container w-935">
+        <div className="profile-header-container">
             <svg
-                className="header-profile-icon"
+                className="profile-header-icon"
                 width="150"
                 height="150"
                 viewBox="0 0 24 24"
@@ -59,20 +86,61 @@ export default function Header({
             </svg>
 
             <div className="header-info">
-                <div className="first-row">
-                    <div className="header-username">{profile.username}</div>
-                    {!myProfile && <button>Follow</button>}
+                <div className="row">
+                    {profile.username ? (
+                        <div className="header-username">
+                            {profile.username}
+                        </div>
+                    ) : (
+                        <Skeleton count={1} width={80} height={30} />
+                    )}
+
+                    {profile.username ? (
+                        !myProfile ? (
+                            <button
+                                onClick={handleToggleFollow}
+                                className={` ${
+                                    isFollowingProfile
+                                        ? "profile-follow profile-unfollow"
+                                        : "profile-follow"
+                                } `}
+                            >
+                                {isFollowingProfile ? "Unfollow" : "Follow"}
+                            </button>
+                        ) : null
+                    ) : (
+                        <Skeleton
+                            className="profile-skeleton"
+                            count={1}
+                            width={90}
+                            height={30}
+                        />
+                    )}
                 </div>
-                <div className="second-row">
-                    <div className="header-photos-count">{photosCount} photos</div>
-                    <div className="header-folowers-info">{followerCount} followers</div>
-                    <div className="header-following-info">{followingCount} following</div>
+                <div className="row">
+                    <div className="header-photos">
+                        {photosCount} {photosCount == 1 ? "photo" : "photos"}
+                    </div>
+                    <div className="header-folowers info">
+                        {followerCount}{" "}
+                        {followerCount == 1 ? "follower" : "followers"}
+                    </div>
+                    <div className="header-following info">
+                        {followingCount}{" "}
+                        {followingCount == 1 ? "following" : "followings"}
+                    </div>
                 </div>
 
-                <div className="header-fullname">{profile.fullName}</div>
+                <div className="profile-header-fullname">
+                    {profile.fullName ? (
+                        profile.fullName
+                    ) : (
+                        <Skeleton count={1} width={100} />
+                    )}
+                </div>
             </div>
         </div>
     ) : (
-        <Skeleton count={1} />
+        <Skeleton count={1} width={635} height={120} />
     );
 }
