@@ -33,7 +33,7 @@ function App() {
 
     return (
         <UserContext.Provider value={{ user, activeUsername: username }}>
-            <Router basename="/instagram-clone">
+            <Router basename="/instagram-clone/">
                 <Suspense fallback={<p>Loading...</p>}>
                     <div className="pagesContainer">
                         <Routes>
@@ -77,7 +77,6 @@ function App() {
                                         />
                                     }
                                 />
-                                
                             </Route>
 
                             <Route path=":a" element={<NotFound />} />

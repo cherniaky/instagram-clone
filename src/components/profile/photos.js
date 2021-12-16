@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 export default function Photos({ photos }) {
     return (
         <div className="profile-photos-container">
-            {!photos[0] ? (
+            {!photos ? (
                 <Skeleton count={1} width={935} height={400} />
             ) : photos.length > 0 ? (
                 photos.map((photo) => (

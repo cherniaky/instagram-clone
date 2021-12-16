@@ -22,11 +22,13 @@ export default function NavBar({ inHome , inProfile }) {
     return (
         <div className="navbar-container">
             <div className="nav-content-container">
-                <img
-                    alt="instagram logo"
-                    className="logo"
-                    src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                />
+                <Link to={ROUTES.DASHBOARD}>
+                    <img
+                        alt="instagram logo"
+                        className="logo"
+                        src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                    />
+                </Link>
 
                 <div className="search-container">
                     <input

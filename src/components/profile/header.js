@@ -119,7 +119,7 @@ export default function Header({
                 </div>
                 <div className="row">
                     <div className="header-photos">
-                        {photosCount} {photosCount == 1 ? "photo" : "photos"}
+                        {photosCount} {photosCount == 1 ? "post" : "posts"}
                     </div>
                     <div className="header-folowers info">
                         {followerCount}{" "}
