@@ -21,6 +21,8 @@ export default function usePhotos() {
 
                 setPhotos(followedUserPhotos);
                 // console.log(followedUserPhotos);
+            } else {
+                setPhotos([]);
             }
         }
 
