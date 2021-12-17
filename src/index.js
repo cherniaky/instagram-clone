@@ -12,17 +12,18 @@ import {
 } from "./lib/firebase";
 
 ReactDOM.render(
-    <FirebaseContext.Provider
-        value={{
-            firebase,
-            db,
-            auth,
-            signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
-        }}
-    >
-        <App />
-    </FirebaseContext.Provider>,
-
+    <React.StrictMode>
+        <FirebaseContext.Provider
+            value={{
+                firebase,
+                db,
+                auth,
+                signInWithEmailAndPassword,
+                createUserWithEmailAndPassword,
+            }}
+        >
+            <App />
+        </FirebaseContext.Provider>
+    </React.StrictMode>,
     document.getElementById("root")
 );

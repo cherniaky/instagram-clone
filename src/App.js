@@ -8,6 +8,7 @@ import useAuthListener from "./hooks/use-auth-listener";
 import UserContext from "./context/user";
 import { getUserByUserId } from "./services/firebase";
 
+
 import ProtectedRoute from "./helpers/protected.route";
 
 const Login = lazy(() => import("./pages/login"));
@@ -32,8 +33,8 @@ function App() {
     }
 
     return (
-        <UserContext.Provider value={{ user, activeUsername: username }}>
-            <Router basename="/instagram-clone/">
+        <Router basename="/instagram-clone">
+            <UserContext.Provider value={{ user, activeUsername: username }}>
                 <Suspense fallback={<p>Loading...</p>}>
                     <div className="pagesContainer">
                         <Routes>
@@ -83,8 +84,8 @@ function App() {
                         </Routes>
                     </div>
                 </Suspense>
-            </Router>
-        </UserContext.Provider>
+            </UserContext.Provider>
+        </Router>
     );
 }
 

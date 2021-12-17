@@ -7,11 +7,9 @@ export default function useAuthListener() {
         JSON.parse(localStorage.getItem("authUser"))
     );
     const {
-        firebase,
-        db,
+       
         auth,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
+        
     } = useContext(FirebaseContext);
 
 
