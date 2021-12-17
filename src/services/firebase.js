@@ -181,3 +181,18 @@ export async function toggleFollow(
         
     return;
 }
+
+
+export async function getAllProfiles(username) {
+    // const querySnapshot = await getDocs(collection(db, "users", limit(5)));
+    const q = query(collection(db, "users"), limit(6));
+
+    const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot.docs[4].data());
+    return querySnapshot.docs
+        .map((user) => ({ ...user.data(), docId: user.id }))
+        .filter(
+            (profile) =>
+                profile.username != username
+        );
+}

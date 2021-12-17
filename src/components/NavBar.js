@@ -3,12 +3,36 @@ import FirebaseContext from "../context/firebase";
 import UserContext from "../context/user";
 import "../styles/NavBar.css";
 import * as ROUTES from "../constants/routes";
-import { Link, Router ,useNavigate} from "react-router-dom";
+import { Link, Router, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import Fuse from "fuse.js";
+import { getAllProfiles } from "../services/firebase";
+import SearchDropdown from "./searchDropdown";
 
+export default function NavBar({ inHome, inProfile }) {
+    const [searchValue, setSearchValue] = useState("");
 
-export default function NavBar({ inHome , inProfile }) {
-    const { user , activeUsername} = useContext(UserContext);
+    const { user, activeUsername } = useContext(UserContext);
+    const [activeSearchDropdown, setActiveSearchDropdown] = useState(false);
+    const [allUsers, setAllUsers] = useState([]);
+
+    const fuse = new Fuse(allUsers, {
+        keys: ["username", "fullName"],
+    });
+
+    useEffect(() => {
+        async function getAllUsers() {
+             await getAllProfiles(activeUsername).then((result)=>setAllUsers(result));
+
+           
+            console.log("all",allUsers);
+           
+        }
+        if (activeUsername) {
+            getAllUsers();
+        }
+    }, [activeUsername]);
+
     const {
         firebase,
         db,
@@ -17,8 +41,7 @@ export default function NavBar({ inHome , inProfile }) {
         createUserWithEmailAndPassword,
     } = useContext(FirebaseContext);
 
-
-    //console.log(user.uid);
+    
     return (
         <div className="navbar-container">
             <div className="nav-content-container">
@@ -29,12 +52,32 @@ export default function NavBar({ inHome , inProfile }) {
                         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
                     />
                 </Link>
-
+        
                 <div className="search-container">
                     <input
-                        className="nav-search search-img"
-                        placeholder="   Search"
+                        onChange={({ target }) => {
+                            setSearchValue(target.value);
+                        }}
+                        value={searchValue}
+                        onFocus={() => setActiveSearchDropdown(true)}
+                        className={`nav-search ${
+                            searchValue ? null : "search-img"
+                        }`}
+                        placeholder={
+                            searchValue ? `   ${searchValue}` : "   Search"
+                        }
                     />
+                    {activeSearchDropdown ? (
+                        <>
+                            <SearchDropdown
+                                users={fuse.search(searchValue)}
+                                setActiveSearchDropdown={
+                                    setActiveSearchDropdown
+                                }
+                            />{" "}
+                            <div className="arrow"></div>
+                        </>
+                    ) : null}
                 </div>
 
                 <div className="nav-icons">
