@@ -6,8 +6,9 @@ import * as ROUTES from "../constants/routes";
 import { Link, Router, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import Fuse from "fuse.js";
-import { getAllProfiles } from "../services/firebase";
+import { getAllProfiles, uploadPost } from "../services/firebase";
 import SearchDropdown from "./searchDropdown";
+import UploadPost from "./uploadPost";
 
 export default function NavBar({ inHome, inProfile }) {
     const [searchValue, setSearchValue] = useState("");
@@ -15,6 +16,9 @@ export default function NavBar({ inHome, inProfile }) {
     const { user, activeUsername } = useContext(UserContext);
     const [activeSearchDropdown, setActiveSearchDropdown] = useState(false);
     const [allUsers, setAllUsers] = useState([]);
+    const [activePostUpload, setActivePostUpload] = useState(false);
+    // const [fileToUpload, setFileToUpload] = useState(null);
+    // const [caption, setCaption] = useState("");
 
     const fuse = new Fuse(allUsers, {
         keys: ["username", "fullName"],
@@ -22,11 +26,9 @@ export default function NavBar({ inHome, inProfile }) {
 
     useEffect(() => {
         async function getAllUsers() {
-             await getAllProfiles(activeUsername).then((result)=>setAllUsers(result));
-
-           
-            console.log("all",allUsers);
-           
+            await getAllProfiles(activeUsername).then((result) =>
+                setAllUsers(result)
+            );
         }
         if (activeUsername) {
             getAllUsers();
@@ -41,7 +43,11 @@ export default function NavBar({ inHome, inProfile }) {
         createUserWithEmailAndPassword,
     } = useContext(FirebaseContext);
 
-    
+    // useEffect(() => {
+
+    // console.log('file' , fileToUpload)
+    // }, [fileToUpload])
+
     return (
         <div className="navbar-container">
             <div className="nav-content-container">
@@ -52,7 +58,7 @@ export default function NavBar({ inHome, inProfile }) {
                         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
                     />
                 </Link>
-        
+
                 <div className="search-container">
                     <input
                         onChange={({ target }) => {
@@ -79,6 +85,51 @@ export default function NavBar({ inHome, inProfile }) {
                         </>
                     ) : null}
                 </div>
+
+                {activePostUpload && (
+                    <>
+                        <UploadPost user={user} setActivePostUpload={setActivePostUpload} />
+                        {/* <div className="upload-form">
+                            <p>Create a publication</p>
+                            <label
+                                for="image_uploads"
+                                className="image-upload-label"
+                            >
+                                Choose image to upload (PNG, JPG)
+                            </label>
+                            <input
+                                onChange={(e) =>
+                                    setFileToUpload(e.target.files[0])
+                                }
+                                name="image_uploads"
+                                accept="image/png, image/jpeg"
+                                className="image-upload"
+                                type="file"
+                                required
+                            />
+                            <input
+                                type="text"
+                                placeholder="Add caption"
+                                onChange={(e) => setCaption(e.target.value)}
+                                value={caption}
+                                required
+                            />
+                            <input
+                                type="submit"
+                                onClick={async function () {
+                                    // await uploadPost(
+                                    //     fileToUpload,
+                                    //     caption,
+                                    //     user.uid
+                                    // );
+                                    setActivePostUpload(false);
+                                    setCaption("");
+                                }}
+                                value="Upload post"
+                            />
+                        </div> */}
+                    </>
+                )}
 
                 <div className="nav-icons">
                     <Link to={ROUTES.DASHBOARD}>
@@ -115,6 +166,7 @@ export default function NavBar({ inHome, inProfile }) {
                         aria-label="Новая публикация"
                         className="icon"
                         color="#262626"
+                        onClick={() => setActivePostUpload(!activePostUpload)}
                         fill="#262626"
                         height="22"
                         role="img"
@@ -125,6 +177,7 @@ export default function NavBar({ inHome, inProfile }) {
                         <path d="M36.3 25.5H11.7c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h24.6c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z"></path>
                         <path d="M24 37.8c-.8 0-1.5-.7-1.5-1.5V11.7c0-.8.7-1.5 1.5-1.5s1.5.7 1.51.5v24.6c0 .8-.7 1.5-1.5 1.5z"></path>
                     </svg>
+
                     {/* <svg
                         aria-label="notify"
                         className="reminder icon"

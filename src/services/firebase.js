@@ -5,16 +5,31 @@ import {
     signInWithEmailAndPassword,
 } from "../lib/firebase";
 import {
+    getAuth,
+    onAuthStateChanged,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+} from "firebase/auth";
+import {
+    getFirestore,
     collection,
     query,
     where,
     getDocs,
+    addDoc,
     limit,
     updateDoc,
     arrayUnion,
     arrayRemove,
     doc,
 } from "firebase/firestore";
+import {
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from "firebase/storage";
 
 export async function doesUsernameExist(username) {
     const q = query(collection(db, "users"), where("username", "==", username));
@@ -178,10 +193,9 @@ export async function toggleFollow(
         activeUserId,
         isFollowingProfile
     );
-        
+
     return;
 }
-
 
 export async function getAllProfiles(username) {
     // const querySnapshot = await getDocs(collection(db, "users", limit(5)));
@@ -191,8 +205,42 @@ export async function getAllProfiles(username) {
     // console.log(querySnapshot.docs[4].data());
     return querySnapshot.docs
         .map((user) => ({ ...user.data(), docId: user.id }))
-        .filter(
-            (profile) =>
-                profile.username != username
+        .filter((profile) => profile.username != username);
+}
+
+export async function uploadPost(file, caption, userId) {
+    try {
+        // 1 - We add a message with a loading icon that will get updated with the shared image.
+        const photoRef = await addDoc(collection(getFirestore(), "photos"), {
+            caption: caption,
+            comments: [],
+            dateCreated: Date.now(),
+            imageSrc: "",
+            likes: [],
+          //  photoId : `${userId}${Date.now()}`,
+            userId: userId,
+            
+        });
+
+        // 2 - Upload the image to Cloud Storage.
+        const filePath = `${getAuth().currentUser.uid}/${photoRef.id}/${
+            file.name
+        }`;
+        const newImageRef = ref(getStorage(), filePath);
+        const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+        // 3 - Generate a public URL for the file.
+        const publicImageUrl = await getDownloadURL(newImageRef);
+
+        // 4 - Update the chat message placeholder with the image's URL.
+        await updateDoc(photoRef, {
+            imageSrc: publicImageUrl,
+            storageUri: fileSnapshot.metadata.fullPath,
+        });
+    } catch (error) {
+        console.error(
+            "There was an error uploading a file to Cloud Storage:",
+            error
         );
+    }
 }
