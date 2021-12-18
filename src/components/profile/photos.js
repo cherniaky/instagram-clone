@@ -9,7 +9,7 @@ export default function Photos({ photos }) {
             ) : photos.length > 0 ? (
                 photos.map((photo) => (
                     <div key={photo.docId} className="profile-photo-container">
-                        <img src={photo.imageSrc} />
+                        <img src={photo.imageSrc} className="profile-post-img" />
                         <p className="profile-photo-detail">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

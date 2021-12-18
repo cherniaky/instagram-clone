@@ -177,3 +177,10 @@
     z-index: 101;
     height: 100vh;
 }
+.close-upload{
+    cursor: pointer;
+    position: absolute;
+    z-index: 101;
+    top: 1rem;
+    right: 1rem;
+}

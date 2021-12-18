@@ -2,7 +2,7 @@ import { useState } from "react";
 import { uploadPost } from "../services/firebase";
 import OutsideClickHandler from "react-outside-click-handler/build/OutsideClickHandler";
 
-export default function UploadPost({ setActivePostUpload , user }) {
+export default function UploadPost({ setActivePostUpload, user }) {
     const [fileToUpload, setFileToUpload] = useState(null);
     const [caption, setCaption] = useState("");
 
@@ -16,14 +16,9 @@ export default function UploadPost({ setActivePostUpload , user }) {
                 <form
                     onSubmit={async function (e) {
                         e.preventDefault();
-                        await uploadPost(
-                            fileToUpload,
-                            caption,
-                            user.uid
-                        );
-
                         setCaption("");
                         setActivePostUpload(false);
+                        await uploadPost(fileToUpload, caption, user.uid);
                     }}
                     className="upload-form"
                 >
@@ -72,6 +67,38 @@ export default function UploadPost({ setActivePostUpload , user }) {
                 </form>{" "}
             </OutsideClickHandler>
             <div className="upload-shadow"></div>
+            <div className="close-upload">
+                <svg
+                    aria-label="Закрыть"
+                    class="_8-yf5 "
+                    color="#ffffff"
+                    fill="#ffffff"
+                    height="24"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="24"
+                >
+                    <polyline
+                        fill="none"
+                        points="20.643 3.357 12 12 3.353 20.647"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                    ></polyline>
+                    <line
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                        x1="20.649"
+                        x2="3.354"
+                        y1="20.649"
+                        y2="3.354"
+                    ></line>
+                </svg>
+            </div>
         </>
     );
 }

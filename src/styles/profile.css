@@ -83,9 +83,7 @@
     position: relative;
 }
 .profile-photo-container img{
-    width: 293px; 
-    transform: translateY(-15%);
-    /* height: 293px; */
+   
 }
 
 .no-photos{
@@ -112,4 +110,12 @@
 .profile-photo-container:hover .profile-photo-detail{
     display: flex;
    background-color: rgba(0, 0, 0, 0.3);
+}
+.profile-post-img{
+   width: 293px;
+   height:auto;
+     height:293px;
+     transform: scale(2);
+    width:auto;
+   
 }
