@@ -128,7 +128,9 @@ export async function getPhotos(userId, following) {
                 userLikedPhoto = true;
             }
 
-            const { username ,profileIconSrc } = await getUserByUserId(photo.userId);
+            const { username, profileIconSrc } = await getUserByUserId(
+                photo.userId
+            );
 
             return { username, ...photo, userLikedPhoto, profileIconSrc };
         })
@@ -217,9 +219,8 @@ export async function uploadPost(file, caption, userId) {
             dateCreated: Date.now(),
             imageSrc: "",
             likes: [],
-          //  photoId : `${userId}${Date.now()}`,
+            //  photoId : `${userId}${Date.now()}`,
             userId: userId,
-            
         });
 
         // 2 - Upload the image to Cloud Storage.
@@ -236,6 +237,34 @@ export async function uploadPost(file, caption, userId) {
         await updateDoc(photoRef, {
             imageSrc: publicImageUrl,
             storageUri: fileSnapshot.metadata.fullPath,
+        });
+    } catch (error) {
+        console.error(
+            "There was an error uploading a file to Cloud Storage:",
+            error
+        );
+    }
+}
+
+export async function uploadProfileIcon(file, docId) {
+    try {
+        // 1 - We add a message with a loading icon that will get updated with the shared image.
+        const profileRef = doc(db, "users", docId);
+        
+        // 2 - Upload the image to Cloud Storage.
+        const filePath = `${getAuth().currentUser.uid}/${profileRef.id}/${
+            file.name
+        }`;
+        const newImageRef = ref(getStorage(), filePath);
+        const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+        // 3 - Generate a public URL for the file.
+        const publicImageUrl = await getDownloadURL(newImageRef);
+
+        // 4 - Update the chat message placeholder with the image's URL.
+        await updateDoc(profileRef, {
+            profileIconSrc: publicImageUrl,
+           // storageUri: fileSnapshot.metadata.fullPath,
         });
     } catch (error) {
         console.error(

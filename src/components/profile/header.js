@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import useUser from "../../hooks/use-user";
+import UploadProfileIcon from "./uploadProfileIcon";
 
 export default function Header({
     profile,
@@ -14,10 +15,12 @@ export default function Header({
     followingCount,
 }) {
     const { firebase, db, auth } = useContext(FirebaseContext);
-    const {user}= useUser();
-    const {  activeUsername } = useContext(UserContext);
+    const { user } = useUser();
+    const { activeUsername } = useContext(UserContext);
     const [isFollowingProfile, setIsFollowingProfile] = useState(false);
     const [myProfile, setMyProfile] = useState(true);
+    const [activeUploadProfileIcon, setActiveUploadProfileIcon] =
+        useState(false);
 
     const handleToggleFollow = async () => {
         setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -34,13 +37,13 @@ export default function Header({
         //     profile.userId,
         //     user.userId
         // );
-        
+
         await toggleFollow(
             isFollowingProfile,
             user.docId,
             profile.docId,
             profile.userId,
-            user.userId,
+            user.userId
         );
     };
 
@@ -65,7 +68,10 @@ export default function Header({
     return profile ? (
         <div className="profile-header-container">
             {profile.profileIconSrc ? (
-                <img className="profile-header-icon profile-profileIcon" src={profile.profileIconSrc}/>
+                <img
+                    className="profile-header-icon profile-profileIcon"
+                    src={profile.profileIconSrc}
+                />
             ) : (
                 <svg
                     className="profile-header-icon"
@@ -88,7 +94,12 @@ export default function Header({
                     />
                 </svg>
             )}
-
+            {activeUploadProfileIcon && (
+                <UploadProfileIcon
+                    setActiveUploadProfileIcon={setActiveUploadProfileIcon}
+                    user={user}
+                />
+            )}
             <div className="header-info">
                 <div className="row">
                     {profile.username ? (
@@ -111,7 +122,18 @@ export default function Header({
                             >
                                 {isFollowingProfile ? "Unfollow" : "Follow"}
                             </button>
-                        ) : null
+                        ) : (
+                            <button
+                                onClick={() =>
+                                    setActiveUploadProfileIcon(
+                                        !activeUploadProfileIcon
+                                    )
+                                }
+                                className="profile-follow"
+                            >
+                                Change profile icon
+                            </button>
+                        )
                     ) : (
                         <Skeleton
                             className="profile-skeleton"
