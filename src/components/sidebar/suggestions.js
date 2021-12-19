@@ -40,6 +40,7 @@ export default function Suggestions({ userId, following ,docId}) {
                     <SuggestedProfile
                         key={profile.docId}
                         spDocId={profile.docId}
+                        imgSrc={profile.profileIconSrc}
                         username={profile.username}
                         profileId={profile.userId}
                         userId={userId}

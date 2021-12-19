@@ -7,8 +7,7 @@ import * as ROUTES from "./constants/routes";
 import useAuthListener from "./hooks/use-auth-listener";
 import UserContext from "./context/user";
 import { getUserByUserId } from "./services/firebase";
-
-
+import useUser from "./hooks/use-user";
 import ProtectedRoute from "./helpers/protected.route";
 
 const Login = lazy(() => import("./pages/login"));
@@ -22,6 +21,7 @@ function App() {
     const [inProfile, setInProfile] = useState(false);
     const [username, setUsername] = useState("");
     const { user } = useAuthListener();
+   // const { user: userDocInfo } = useUser();
 
     async function getUsername() {
         const myuser = await getUserByUserId(user.uid);
@@ -34,7 +34,13 @@ function App() {
 
     return (
         <Router basename="/instagram-clone">
-            <UserContext.Provider value={{ user, activeUsername: username }}>
+            <UserContext.Provider
+                value={{
+                    user,
+                    activeUsername: username,
+                    // userProfileIconSrc: userDocInfo.profileIconSrc,
+                }}
+            >
                 <Suspense fallback={<p>Loading...</p>}>
                     <div className="pagesContainer">
                         <Routes>

@@ -67,3 +67,12 @@
 .link{
     color: black;
 }
+.sidebar-profileIcon{
+    border-radius: 56px;
+}
+
+.suggestion-icon{
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+}

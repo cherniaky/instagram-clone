@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { uploadPost } from "../services/firebase";
 import OutsideClickHandler from "react-outside-click-handler/build/OutsideClickHandler";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 export default function UploadPost({ setActivePostUpload, user }) {
     const [fileToUpload, setFileToUpload] = useState(null);
     const [caption, setCaption] = useState("");
+    const [uploading, setUploading] = useState(false);
 
     return (
         <>
@@ -16,9 +19,11 @@ export default function UploadPost({ setActivePostUpload, user }) {
                 <form
                     onSubmit={async function (e) {
                         e.preventDefault();
+                        setUploading(true);
+                        await uploadPost(fileToUpload, caption, user.uid);
+                        setUploading(false);
                         setCaption("");
                         setActivePostUpload(false);
-                        await uploadPost(fileToUpload, caption, user.uid);
                     }}
                     className="upload-form"
                 >
@@ -55,18 +60,30 @@ export default function UploadPost({ setActivePostUpload, user }) {
                             value={caption}
                             required
                         />
-                        <input
-                            disabled={!caption || !fileToUpload}
-                            className={`submit-post ${
-                                !caption || !fileToUpload ? "disabled" : ""
-                            }`}
-                            type="submit"
-                            value="Upload post"
-                        />
+                        {uploading ? (
+                            <Loader
+                                type="TailSpin"
+                                color="#0095F6"
+                                className="submit-post loading-circle"
+                                height={40}
+                                width={40}
+                            />
+                        ) : (
+                            <input
+                                disabled={!caption || !fileToUpload}
+                                className={`submit-post ${
+                                    !caption || !fileToUpload ? "disabled" : ""
+                                }`}
+                                type="submit"
+                                value="Upload post"
+                            />
+                        )}
                     </div>
                 </form>{" "}
             </OutsideClickHandler>
+
             <div className="upload-shadow"></div>
+
             <div className="close-upload">
                 <svg
                     aria-label="Закрыть"

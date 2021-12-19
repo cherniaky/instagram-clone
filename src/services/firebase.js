@@ -128,9 +128,9 @@ export async function getPhotos(userId, following) {
                 userLikedPhoto = true;
             }
 
-            const { username } = await getUserByUserId(photo.userId);
+            const { username ,profileIconSrc } = await getUserByUserId(photo.userId);
 
-            return { username, ...photo, userLikedPhoto };
+            return { username, ...photo, userLikedPhoto, profileIconSrc };
         })
     );
 

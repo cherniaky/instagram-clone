@@ -17,7 +17,10 @@ export default function Profile({ setInHome, setInProfile, inProfile }) {
     useEffect(() => {
         setInProfile(true);
         setInHome(false);
-        return () => {};
+        return () => {
+             setInProfile(false);
+             setInHome(false);
+        };
     }, []);
 
     useEffect(() => {

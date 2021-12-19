@@ -9,10 +9,10 @@ export default function Post({ content }) {
     const commentInput = useRef(null);
 
     const handleFocus = () => commentInput.current.focus();
-
+    //console.log(content);
     return (
         <div className="post-container">
-            <Header username={content.username} />
+            <Header username={content.username} iconSrc={content.profileIconSrc} />
             <Image src={content.imageSrc} />
             <Actions
                 docId={content.docId}
