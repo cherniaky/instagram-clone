@@ -1,2 +1,0 @@
-(this["webpackJsonpinstagram-clone"]=this["webpackJsonpinstagram-clone"]||[]).push([[8],{100:function(n,t,e){"use strict";e.r(t),e.d(t,"default",(function(){return u}));e(92);var c=e(10),o=e(6);function u(){return Object(c.useEffect)((function(){return document.title="Not Found!",function(){document.title="Instagram"}}),[]),Object(o.jsx)("div",{className:"not-found-page",children:"Not found"})}},92:function(n,t,e){}}]);
-//# sourceMappingURL=8.85b5d3e2.chunk.js.map
